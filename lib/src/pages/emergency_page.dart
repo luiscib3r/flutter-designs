@@ -72,39 +72,73 @@ class EmergencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 300),
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: items.length,
-              itemBuilder: (context, index) => FadeInLeft(
-                duration: const Duration(milliseconds: 300),
-                child: items[index],
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverPersistentHeader(
+            floating: true,
+            delegate: _SliverCustomHeaderDelegate(),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              List.generate(
+                items.length,
+                (index) => FadeInLeft(
+                  duration: const Duration(milliseconds: 300),
+                  child: items[index],
+                ),
               ),
             ),
           ),
-          Stack(
-            children: [
-              const IconHeader(),
-              Positioned(
-                right: 0,
-                top: 45,
-                child: RawMaterialButton(
-                  onPressed: () {},
-                  padding: const EdgeInsets.all(15),
-                  shape: const CircleBorder(),
-                  child: const FaIcon(
-                    FontAwesomeIcons.ellipsisV,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
         ],
       ),
+    );
+  }
+}
+
+class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return const SizedBox.expand(child: _Header());
+  }
+
+  @override
+  double get maxExtent => 300;
+
+  @override
+  double get minExtent => 260;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        const IconHeader(),
+        Positioned(
+          right: 0,
+          top: 45,
+          child: RawMaterialButton(
+            onPressed: () {},
+            padding: const EdgeInsets.all(15),
+            shape: const CircleBorder(),
+            child: const FaIcon(
+              FontAwesomeIcons.ellipsisV,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
