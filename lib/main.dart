@@ -1,4 +1,4 @@
-import 'package:designs/src/pages/pinterest_page.dart';
+import 'package:designs/src/pages/emergency_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Design App',
-      home: PinterestPage(),
+      home: EmergencyPage(),
     );
   }
 }
